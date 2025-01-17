@@ -1,3 +1,5 @@
+import { SearchBar } from "./SearchBar";
+
 export function NavBar(){
     return <nav className="navbar navbar-expand-lg bg-body-tertiary">
     <div className="container-fluid">
@@ -10,6 +12,7 @@ export function NavBar(){
           <a className="nav-link active" aria-current="page" href="/">Home</a>
           <a className="nav-link" href="/f">Features</a>
           <a className="nav-link" href="/test">Test</a>
+          <a className="nav-link" href="/search">Search</a>
         </div>
       </div>
     </div>
