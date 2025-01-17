@@ -1,10 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
 import { NavBar } from './Composants/Navbar';
 import { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Home from './Templates/Home';
-import Stocks from './Templates/Stocks';
+import Home from './Layout/Home';
+import Stocks from './Layout/Stocks';
 
 class App extends Component {
   constructor(props) {
@@ -30,7 +28,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="bg-secondary-subtle h-100">
         <NavBar></NavBar>
         <Routes>
          <Route path="/" element={<Home/>}></Route>
@@ -51,7 +49,11 @@ class App extends Component {
           </form>
           <p>{this.state.greeting}</p>
         </header>
+        <div className="position-absolute" style={{bottom:0}}>
+    2 days ago
+  </div>
       </div>
+      
     );
   }
 }
