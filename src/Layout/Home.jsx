@@ -1,14 +1,23 @@
-import { Component } from 'react';
+import { Pokemon } from "../Composants/Pokemon";
 
-class Home extends Component {
-    render() {
-      return (
-        <div  className="d-flex flex-column align-items-center">
-          <h1 >Home</h1>
-          <div>sweet home</div>
-        </div>
-      );
-    }
-  }
-  
-  export default Home;
+
+export function Home(){ 
+
+  const Pokemons = [];
+  for (let index = 1; index<= 10; index++) {
+    Pokemons.push(<Pokemon id={index} key={index}/>)
+
+}
+
+  return ( <div  className="d-flex flex-column align-items-center">
+      <h1 >Home</h1>
+      <div>{Pokemons}</div>
+
+
+
+    </div>
+)
+}
+
+
+
