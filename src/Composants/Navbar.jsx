@@ -9,6 +9,7 @@ export function NavBar(){
         <div className="navbar-nav">
           <a className="nav-link active" aria-current="page" href="/">Home</a>
           <a className="nav-link" href="/f">Features</a>
+          <a className="nav-link" href="/test">Test</a>
         </div>
       </div>
     </div>
