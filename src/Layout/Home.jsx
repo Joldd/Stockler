@@ -9,7 +9,7 @@ export function Home(){
 
 }
 
-  return ( <div  className="d-flex flex-column align-items-center">
+  return ( <div className="d-flex flex-column align-items-center">
       <h1 >Home</h1>
       <div>{Pokemons}</div>
 

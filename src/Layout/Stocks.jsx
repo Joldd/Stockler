@@ -1,52 +1,106 @@
-import { useEffect, useState } from 'react';
-import { Ticker } from '../Components/Ticker';
+import { useState, useEffect } from 'react';
+import { SearchBar } from '../Components/SearchBar';
+import { IgrFinancialChart } from 'igniteui-react-charts';
+import { IgrFinancialChartModule } from 'igniteui-react-charts';
+IgrFinancialChartModule.register();
 
 export function Stocks() {
 
-  const [tickers, setTickers] = useState([]);
+  const [search, setSearch] = useState("");
+  const [datas, setDatas] = useState([]);
+  const [metaData, setMetaData] = useState({}); 
 
-    useEffect(() => {
-      fetch("https://yahoo-finance15.p.rapidapi.com/api/v2/markets/tickers?page=1&type=STOCKS", 
-      {headers: {
-        'x-rapidapi-key': '0255f7a229msh343bc8bef4af683p1aeae4jsnad07d04adbeb',
-        'x-rapidapi-host': 'yahoo-finance15.p.rapidapi.com'
-        } 
-      })
+  const onSearch = () => {
+    //fetch("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="+"IBM"+"&interval=5min&apikey=XYHZPBM3BULB5BP4")
+      fetch("test.json")
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        setTickers(data.body);
+        var DATA = [];
+        //var m = data['Meta Data'];
+        var m = {
+          '1. Information': 'This is a test',
+          '2. Symbol': search,
+          '3. Last Refreshed': '2021-06-11 20:00:00',
+          '4. Interval': '5min',
+          '5. Output Size': 'Compact',
+          '6. Time Zone': 'US/Eastern'
+        };
+        setMetaData(m);
+        var t = data['Time Series (5min)'];
+        var n = Object.keys(t).length;
+        for (var i = n - 1; i >= 0; i--) {
+          var d = Object.keys(t)[i];
+          DATA.push({
+            'Date': new Date(parseInt(d.slice(0, 4)), parseInt(d.slice(5, 7) - 1), parseInt(d.slice(8, 10)), parseInt(d.slice(11, 13)), parseInt(d.slice(14, 16))),
+            'Open': parseFloat(t[d]['1. open']),
+            'High': parseFloat(t[d]['2. high']),
+            'Low': parseFloat(t[d]['3. low']),
+            'Close': parseFloat(t[d]['4. close']),
+            'Volume': parseFloat(t[d]['5. volume'])
+          });
+        }
+        setDatas(DATA);
       })
       .catch(err => {
-        console.error(err);
+          console.error(err);
       })
-    }, []);
+  }
 
-    useEffect(() => {
-      fetch("https://yahoo-finance15.p.rapidapi.com/api/v1/markets/screener?list=day_gainers", 
-      {headers: {
-          'x-rapidapi-key': '0255f7a229msh343bc8bef4af683p1aeae4jsnad07d04adbeb',
-          'x-rapidapi-host': 'yahoo-finance15.p.rapidapi.com'
-        } 
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-      })
-      .catch(err => {
-        console.error(err);
-      })
-    }, []);
-
-    const Tickers = [];
-    for (let i = 0; i < tickers.length; i++) {
-      Tickers.push(<Ticker ticker={tickers[i]} key={i} />);
-    }
+  // useEffect(() => {
+  // fetch("test.json")
+  // .then(response => response.json())
+  // .then(data => {
+  //   var DATA = [];
+  //   var m = data['Meta Data'];
+  //   setMetaData(m);
+  //   var t = data['Time Series (5min)'];
+  //   var n = Object.keys(t).length;
+  //   for (var i = n - 1; i >= 0; i--) {
+  //     var d = Object.keys(t)[i];
+  //     DATA.push({
+  //       'Date': new Date(parseInt(d.slice(0, 4)), parseInt(d.slice(5, 7) - 1), parseInt(d.slice(8, 10)), parseInt(d.slice(11, 13)), parseInt(d.slice(14, 16))),
+  //       'Open': parseFloat(t[d]['1. open']),
+  //       'High': parseFloat(t[d]['2. high']),
+  //       'Low': parseFloat(t[d]['3. low']),
+  //       'Close': parseFloat(t[d]['4. close']),
+  //       'Volume': parseFloat(t[d]['5. volume'])
+  //     });
+  //   }
+  //   setDatas(DATA);
+  // })
+  // .catch(err => {
+  //   console.error(err);
+  // })
+  // }, []);
 
     return (
-      <div className="d-flex flex-column align-items-center">
-        <h1>Stocks</h1>
-        <div>{Tickers}</div>
+      <div className="container sample" >
+        <SearchBar search={search} setSearch={setSearch} onSearch={onSearch}/>
+        <div className="container" >
+          <IgrFinancialChart
+            width="750px"
+            height="750px"
+            isToolbarVisible={false}
+            chartType="Candle"
+            chartTitle={metaData['2. Symbol']}
+            titleAlignment="Left"
+            titleLeftMargin="25"
+            titleTopMargin="10"
+            titleBottomMargin="10"
+            subtitle={metaData['1. Information']}
+            subtitleAlignment="Left"
+            subtitleLeftMargin="25"
+            subtitleTopMargin="5"
+            subtitleBottomMargin="10"
+            yAxisLabelLocation="OutsideLeft"
+            yAxisMode="Numeric"
+            yAxisTitle="Financial Prices"
+            yAxisTitleLeftMargin="10"
+            yAxisTitleRightMargin="5"
+            yAxisLabelLeftMargin="0"
+            zoomSliderType="None"
+            dataSource={datas}/>
+        </div>
       </div>
     );
 }

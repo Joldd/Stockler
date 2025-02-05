@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SearchBar } from '../Components/SearchBar';
 import { Stock } from '../Components/Stock';
 
