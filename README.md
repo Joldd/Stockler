@@ -72,3 +72,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ### API KEY Alpha Vantage
 MMFWHL3TAILL4EYN
 XYHZPBM3BULB5BP4
+
+### Docker Config
+docker network create proxy

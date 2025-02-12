@@ -1,0 +1,60 @@
+services:
+  # stockler-frontend:
+  #   build: "./frontend"
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   depends_on:
+  #     - stockler-backend
+
+  stockler-vite:
+    build: "./stockler-vite"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./stockler-vite:/app
+      - /app/node_modules
+    depends_on:
+      - stockler-backend
+
+  stockler-backend:
+    build: "./backend"
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - stockler-db  
+    networks: 
+      - proxy   
+
+  stockler-db:
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./stockler-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_PORT: 5432
+    container_name: stockler-db
+    networks: 
+      - proxy
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+
+volumes:
+  defy-db-data:
+
+networks:
+  proxy:
+    external: true
