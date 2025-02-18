@@ -8,23 +8,24 @@ export function Stocks() {
 
   const [search, setSearch] = useState("");
   const [datas, setDatas] = useState([]);
-  const [symbol, setSymbol] = useState({}); 
+  const [overview, setOverview] = useState({}); 
+  const [searchError, setSearchError] = useState(false);
 
   const onSearch = () => {
     fetch(`http://localhost:3001/ticker/${search.toUpperCase()}`)
       .then(response => response.json())
       .then(data => {
-        setSymbol(data.name);
-        console.log(data);
+        setOverview(data.overview);
         const formattedData = data.data.map(data => ({
           ...data,
           Date: new Date(data.Date)
         }));
-        console.log(formattedData);
         setDatas(formattedData);
+        setSearchError(false);
       })
       .catch(err => {
-          console.error(err);
+        setSearchError(true);
+        console.log("Search no results with error : ", err);
       })
   }
 
@@ -32,20 +33,25 @@ export function Stocks() {
       <div className="container sample" style={{width: "1000px"}}>
         <SearchBar search={search} setSearch={setSearch} onSearch={onSearch}/>
         <div className="container" >
-          <IgrFinancialChart
-            width="750px"
-            height="750px"
-            chartType="Line"
-            thickness={2}
-            chartTitle="Google vs Microsoft Changes"
-            subtitle="Between 2013 and 2017"
-            yAxisMode="PercentChange"
-            yAxisTitle="Percent Changed"
-            dataSource={datas}
-            xAxisLabelLocation="OutsideBottom"
-            xAxisLabelAngle={45}
-            axisLabelFormat="yyyy-MM-dd HH:mm"
-             />
+          {!searchError ? (
+            <IgrFinancialChart
+              width="750px"
+              height="750px"
+              chartType="Line"
+              thickness={2}
+              chartTitle={overview.Name}
+              subtitle={overview.Industry}
+              yAxisMode="PercentChange"
+              yAxisTitle="Percent Changed"
+              dataSource={datas}
+              xAxisLabelLocation="OutsideBottom"
+              xAxisLabelAngle={45}
+              axisLabelFormat="yyyy-MM-dd HH:mm"
+            />
+          ) : (
+            <h2 className="d-flex align-items-center justify-content-center" style={{height: "750px"}}>Not found</h2>
+          )     
+        }       
         </div>
       </div>
     );

@@ -78,7 +78,7 @@ export function addTicker(type, symbol){
 				'Volume': parseFloat(t[d]['5. volume'])
 			});
 			}
-		  	const queryInsert = {
+			const queryInsert = {
 				text: 'INSERT INTO tickers(name, data) VALUES($1, $2)',
 				values: [ data['Meta Data']['2. Symbol'], JSON.stringify(DATA)],
 		  	};
@@ -87,4 +87,26 @@ export function addTicker(type, symbol){
 	});
 }
 
-//addTicker('TIME_SERIES_MONTHLY', 'GOOG');
+export function addOverview(symbol){
+	request.get({
+		url: `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=XYHZPBM3BULB5BP4`,
+		json: true,
+		headers: {'User-Agent': 'request'}
+	  }, (err, res, data) => {
+		if (err) {
+		  console.log('Error:', err);
+		} else if (res.statusCode !== 200) {
+		  console.log('Status:', res.statusCode);
+		} else {
+			const queryUpdate = {
+				text: 'UPDATE tickers SET overview = $1 WHERE name = $2',
+				values: [ data, symbol]
+		  	};	
+			client.query(queryUpdate);
+		}
+	});
+}
+
+//const s = "GOOG";
+//addTicker('TIME_SERIES_MONTHLY', s);
+//addOverview(s);
