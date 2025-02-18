@@ -43,40 +43,44 @@ export function select(req){
 
 connectDB();
 
-// request.get({
-//     url: "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&apikey=XYHZPBM3BULB5BP4",
-//     json: true,
-//     headers: {'User-Agent': 'request'}
-//   }, (err, res, data) => {
-//     if (err) {
-//       console.log('Error:', err);
-//     } else if (res.statusCode !== 200) {
-//       console.log('Status:', res.statusCode);
-//     } else {
-// 		var DATA = [];
-// 		var t = data['Time Series (5min)'];
-// 		var n = Object.keys(t).length;
-// 		for (var i = n - 1; i >= 0; i--) {
-// 		var d = Object.keys(t)[i];
-// 		DATA.push({
-// 			'Date': new Date(parseInt(d.slice(0, 4)), parseInt(d.slice(5, 7) - 1), parseInt(d.slice(8, 10)), parseInt(d.slice(11, 13)), parseInt(d.slice(14, 16))),
-// 			'Open': parseFloat(t[d]['1. open']),
-// 			'High': parseFloat(t[d]['2. high']),
-// 			'Low': parseFloat(t[d]['3. low']),
-// 			'Close': parseFloat(t[d]['4. close']),
-// 			'Volume': parseFloat(t[d]['5. volume'])
-// 		});
-// 		}
-//       const queryInsert = {
-// 		text: 'INSERT INTO tickers(name, data) VALUES($1, $2)',
-// 		values: [ data['Meta Data']['2. Symbol'], JSON.stringify(DATA)],
-// 	}
-// 	client.query(queryInsert);
-//     }
-// });
+request.get({
+    url: "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=MSFT&apikey=XYHZPBM3BULB5BP4",
+    json: true,
+    headers: {'User-Agent': 'request'}
+  }, (err, res, data) => {
+    if (err) {
+      console.log('Error:', err);
+    } else if (res.statusCode !== 200) {
+      console.log('Status:', res.statusCode);
+    } else {
+		console.log(data);
+		var DATA = [];
+		var t = data[Object.keys(data)[1]];
+		var n = Object.keys(t).length;
+		for (var i = n - 1; i >= 0; i--) {
+		var d = Object.keys(t)[i];
+		var date = new Date(parseInt(d.slice(0, 4)), parseInt(d.slice(5, 7) - 1), parseInt(d.slice(8, 10)));
+		DATA.push({
+			'Date': date,
+			'Open': parseFloat(t[d]['1. open']),
+			'High': parseFloat(t[d]['2. high']),
+			'Low': parseFloat(t[d]['3. low']),
+			'Close': parseFloat(t[d]['4. close']),
+			'Volume': parseFloat(t[d]['5. volume'])
+		});
+		}
+      const queryInsert = {
+		text: 'INSERT INTO tickers(name, data) VALUES($1, $2)',
+		values: [ data['Meta Data']['2. Symbol'], JSON.stringify(DATA)],
+	}
+	client.query(queryInsert);
+    }
+});
 
 // var data = JSON.parse(fs.readFileSync('test.json', 'utf8'));
 // var DATA = [];
+// var a = data[Object.keys(data)[0]];
+// console.log(a);
 // var t = data['Time Series (5min)'];
 // var n = Object.keys(t).length;
 // for (var i = n - 1; i >= 0; i--) {

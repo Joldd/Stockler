@@ -11,11 +11,17 @@ export function Stocks() {
   const [symbol, setSymbol] = useState({}); 
 
   const onSearch = () => {
-    fetch(`http://localhost:3001/ticker/${search}`)
+    fetch(`http://localhost:3001/ticker/${search.toUpperCase()}`)
       .then(response => response.json())
       .then(data => {
         setSymbol(data.name);
-        setDatas(data.data);
+        console.log(data);
+        const formattedData = data.data.map(data => ({
+          ...data,
+          Date: new Date(data.Date)
+        }));
+        console.log(formattedData);
+        setDatas(formattedData);
       })
       .catch(err => {
           console.error(err);
@@ -23,32 +29,23 @@ export function Stocks() {
   }
 
     return (
-      <div className="container sample" >
+      <div className="container sample" style={{width: "1000px"}}>
         <SearchBar search={search} setSearch={setSearch} onSearch={onSearch}/>
         <div className="container" >
           <IgrFinancialChart
             width="750px"
             height="750px"
-            isToolbarVisible={false}
-            chartType="Candle"
-            chartTitle={symbol}
-            titleAlignment="Left"
-            titleLeftMargin="25"
-            titleTopMargin="10"
-            titleBottomMargin="10"
-            subtitle={'subtitle'}
-            subtitleAlignment="Left"
-            subtitleLeftMargin="25"
-            subtitleTopMargin="5"
-            subtitleBottomMargin="10"
-            yAxisLabelLocation="OutsideLeft"
-            yAxisMode="Numeric"
-            yAxisTitle="Financial Prices"
-            yAxisTitleLeftMargin="10"
-            yAxisTitleRightMargin="5"
-            yAxisLabelLeftMargin="0"
-            zoomSliderType="None"
-            dataSource={datas}/>
+            chartType="Line"
+            thickness={2}
+            chartTitle="Google vs Microsoft Changes"
+            subtitle="Between 2013 and 2017"
+            yAxisMode="PercentChange"
+            yAxisTitle="Percent Changed"
+            dataSource={datas}
+            xAxisLabelLocation="OutsideBottom"
+            xAxisLabelAngle={45}
+            axisLabelFormat="yyyy-MM-dd HH:mm"
+             />
         </div>
       </div>
     );
