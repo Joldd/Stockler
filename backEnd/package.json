@@ -1,9 +1,15 @@
 {
   "name": "Stockler",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
-    "mysql": "^2.18.1"
+    "cors": "^2.8.5",
+    "fs": "^0.0.1-security",
+    "mysql": "^2.18.1",
+    "pg": "^8.13.3",
+    "postgres": "^3.4.5",
+    "request": "^2.88.2"
   },
   "proxy": "http://localhost:3001",
   "scripts": {
