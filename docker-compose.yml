@@ -1,13 +1,4 @@
 services:
-  # stockler-frontend:
-  #   build: "./frontend"
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
-  #   depends_on:
-  #     - stockler-backend
 
   stockler-vite:
     build: "./stockler-vite"
@@ -45,12 +36,6 @@ services:
     container_name: stockler-db
     networks: 
       - proxy
-
-  # adminer:
-  #   image: adminer
-  #   restart: always
-  #   ports:
-  #     - 8080:8080
 
 volumes:
   defy-db-data:
