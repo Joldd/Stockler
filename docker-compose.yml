@@ -17,6 +17,12 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST: stockler-db
     depends_on:
       - stockler-db  
     networks: 
@@ -33,6 +39,7 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
       POSTGRES_PORT: 5432
+      POSTGRES_HOST: stockler-db
     container_name: stockler-db
     networks: 
       - proxy

@@ -11,7 +11,6 @@ export class Ticker{
 
     static createWithAPI(type, symbol){
         let ticker = new Ticker();
-        console.log("0.5");
         return new Promise((resolve, reject) =>{
             request.get({
                 url: `https://www.alphavantage.co/query?function=${type}&symbol=${symbol}&apikey=XYHZPBM3BULB5BP4`,
@@ -47,7 +46,6 @@ export class Ticker{
     }
     
     addOverview(){
-        console.log("2.5");
         return new Promise((resolve, reject) => {
             request.get({
                 url: `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${this.name}&apikey=XYHZPBM3BULB5BP4`,
@@ -75,7 +73,6 @@ export class Ticker{
     }
 
     create(){
-        console.log("1.5");
         return new Promise((resolve, reject) => {
             const queryInsert = {
                 text: 'INSERT INTO tickers(name, data, overview) VALUES($1, $2, $3)',

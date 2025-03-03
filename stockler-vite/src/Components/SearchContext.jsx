@@ -8,8 +8,10 @@ export const SearchProvider = ({ children }) => {
   const [overview, setOverview] = useState({});
   const [searchError, setSearchError] = useState(false);
 
+  const apiUrl = import.meta.env.VITE_API_URL
+
   const onSearch = () => {
-    fetch(`http://localhost:3001/ticker/${search.toUpperCase()}`)
+    fetch(`${apiUrl}/ticker/${search.toUpperCase()}`)
       .then(response => response.json())
       .then(data => {
         setOverview(data.overview);

@@ -1,18 +1,19 @@
 export const TopStocks = () => {
 
+    const apiUrl = import.meta.env.VITE_API_URL
 
-  const onClick = () => {
-    fetch(`http://localhost:3001/ticker/test`, {
-        method: 'POST'
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  };
+    const onClick = () => {
+        fetch(`${apiUrl}/ticker/test/GOOGL`, {
+            method: 'POST'
+        })
+        .catch(error => {
+        console.error('Error:', error);
+        });
+    };
 
-  return (
-    <div>
-        <button onClick={onClick}>AddTicker</button>
-    </div>
-  );
+    return (
+        <div>
+            <button onClick={onClick}>AddTicker</button>
+        </div>
+    );
 };

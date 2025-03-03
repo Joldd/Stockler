@@ -12,15 +12,12 @@ app.get('/ticker/:name', (req, res) => {
     })
 });
 
-app.post('/ticker/test', async (req, res) => {
+app.post('/ticker/test/:name', async (req, res) => {
+    let name = req.params.name;
     try {
-        console.log("0");
-        let t = await Ticker.createWithAPI("TIME_SERIES_MONTHLY", "NVDA");
-        console.log("1");
+        let t = await Ticker.createWithAPI("TIME_SERIES_MONTHLY", name);
         await t.create();
-        console.log("2");
         await t.addOverview();
-        console.log("3");
         res.status(200).send('Ticker created successfully');
       } catch (error) {
         console.error('Error creating ticker:', error);
