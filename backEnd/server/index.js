@@ -1,6 +1,6 @@
 import express from 'express';
-import * as db from "./database.js"
 import cors from 'cors'
+import ticker_controller from './Controllers/ticker_controller.js'
 
 const corsOptions = {
   origin: "http://localhost:5173",
@@ -10,6 +10,8 @@ const app = express();
 
 app.use(cors(corsOptions));
 
+app.use(ticker_controller);
+
 app.get('/api/greeting', (req, res) => {
   const name = req.query.name || 'World';
   res.setHeader('Content-Type', 'application/json');
@@ -18,14 +20,6 @@ app.get('/api/greeting', (req, res) => {
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
-});
-
-app.get('/ticker/:name', (req, res) => {
-  let name = req.params.name;
-  db.select(name).then((result) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(result));
-  })
 });
  
 app.listen(3001, () =>
