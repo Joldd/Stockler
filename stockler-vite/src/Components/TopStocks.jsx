@@ -21,8 +21,8 @@ export const TopStocks = () => {
     , [])
 
     return (
-            <div class="container text-center">
-                <h2>Top {nTop} actions</h2>
+            <div class="container text-center customContainer">
+                <h2 class="title">Top {nTop} actions</h2>
             <div class="row topStockHead">
                 <h3 class="col">#</h3>
                 <h3 class="col-4">Nom</h3>

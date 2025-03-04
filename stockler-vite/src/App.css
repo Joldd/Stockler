@@ -48,12 +48,24 @@ html, body, #root {
   color: #888;
 }
 
+.customContainer {
+  background-color: #41444b;
+  border-radius: 50px;;
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
 /* TOP STOCKS */
+.title{
+  color: #96E2D6;
+}
 .topStockHead{
-  background-color:  #41444b;
+  background-color:  #2d2e31;
   border-radius: 30px;
   align-items: center;
   margin: 1rem;
+  margin-right: 2rem !important;
+  margin-left: 2rem !important;
   padding: 0.5rem;
   color: #D7D3D3;
 }
@@ -66,6 +78,8 @@ html, body, #root {
 .topStock{
   border-radius: 30px;
   margin: 1rem;
+  margin-right: 2rem !important;
+  margin-left: 2rem !important;
   align-items: center;
 }
 .topStock{
