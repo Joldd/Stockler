@@ -8,7 +8,7 @@ html, body, #root {
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
 }
 
@@ -47,3 +47,37 @@ html, body, #root {
 .read-the-docs {
   color: #888;
 }
+
+/* TOP STOCKS */
+.topStockHead{
+  background-color:  #41444b;
+  border-radius: 30px;
+  align-items: center;
+  margin: 1rem;
+  padding: 0.5rem;
+  color: #D7D3D3;
+}
+.topStockHead .col{
+  margin: 0rem;
+}
+.topStockHead .col-4{
+  margin: 0;
+}
+.topStock{
+  border-radius: 30px;
+  margin: 1rem;
+  align-items: center;
+}
+.topStock{
+  border-radius: 30px;
+  margin: 1rem;
+  align-items: center;
+  padding: 0.2rem;
+}
+.topStock:nth-child(even) {
+  background-color:  #4866B7;
+}
+.topStock:nth-child(odd) {
+  background-color: #D7D3D3;
+}
+/*  */

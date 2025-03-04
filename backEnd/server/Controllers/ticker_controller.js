@@ -25,4 +25,16 @@ app.post('/ticker/test/:name', async (req, res) => {
       }
 })
 
+app.get('/ticker/top/:n', async (req, res) => {
+  let n = req.params.n;
+  try {
+    let result = await Ticker.getTop(n);
+    let topTickers = result.rows;
+    res.setHeader('Content-Type', 'application/json');
+    res.send(topTickers);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
   export default app

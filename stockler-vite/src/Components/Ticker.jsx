@@ -1,13 +1,18 @@
-export function Ticker({ticker}){ 
+export function Ticker({ticker, index}){ 
 
-  return ( <div  className="d-flex flex-column align-items-center">
-        <h2 >{ticker.name}</h2>
-        <ul>
-            <li>{ticker.symbol}</li>
-            <li>{ticker.marketCap}</li>
-            <li>{ticker.netchange}</li>
-            <li>{ticker.pctchange}</li>
-        </ul>
+  return ( <div class="row topStock">
+        <div class="col">
+            {index}
+        </div>
+        <div class="col-4">
+            {ticker.overview["Name"]}
+        </div>
+        <div class="col">
+            {ticker.name}
+        </div>
+        <div class="col">
+            {ticker.data[0]["Close"]} €
+        </div>
     </div>
     )
 }

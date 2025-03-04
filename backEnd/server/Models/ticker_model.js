@@ -9,6 +9,14 @@ export class Ticker{
         this.overview = null;
     }
 
+    static fromResult(result){
+        let ticker = new Ticker;
+        ticker.id = result.id;
+        ticker.name = result.name;
+        ticker.data = result.data;
+        ticker.overview = result.overview;
+    }
+
     static createWithAPI(type, symbol){
         let ticker = new Ticker();
         return new Promise((resolve, reject) =>{
@@ -86,4 +94,19 @@ export class Ticker{
             });
         });
     }
+
+    static getTop(n){
+        return new Promise((resolve, reject) => {
+            const querySelect = {
+                text: `SELECT * FROM tickers ORDER BY id ASC LIMIT ${n}`
+            };
+            db.client.query(querySelect, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(res);
+            });
+        });
+    }
+
 }
