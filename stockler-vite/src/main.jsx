@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router';
 import { Home } from './Layout/Home';
 import {Stocks} from './Layout/Stocks';
+import {AddStock} from './Layout/AddStock';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 createRoot(document.getElementById('root')).render(
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App/>}>
           <Route index element={<Home/>}></Route>
           <Route path="/stocks" element={<Stocks/>}></Route>
+          <Route path="/addStock" element={<AddStock/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

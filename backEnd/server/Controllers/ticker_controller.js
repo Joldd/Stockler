@@ -4,6 +4,8 @@ import { Ticker } from "../Models/ticker_model.js"
 
 const app = express();
 
+app.use(express.json());
+
 app.get('/ticker/:name', (req, res) => {
     let name = req.params.name;
     db.select(name).then((result) => {
@@ -12,8 +14,8 @@ app.get('/ticker/:name', (req, res) => {
     })
 });
 
-app.post('/ticker/test/:name', async (req, res) => {
-    let name = req.params.name;
+app.post('/ticker/add', async (req, res) => {
+    let name = req.body.name;
     try {
         let t = await Ticker.createWithAPI("TIME_SERIES_MONTHLY", name);
         await t.create();

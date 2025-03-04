@@ -1,5 +1,6 @@
 import request from 'request';
 import * as db from "../database.js"
+import { config } from "../config.js"
 
 export class Ticker{
     constructor(){
@@ -21,7 +22,7 @@ export class Ticker{
         let ticker = new Ticker();
         return new Promise((resolve, reject) =>{
             request.get({
-                url: `https://www.alphavantage.co/query?function=${type}&symbol=${symbol}&apikey=XYHZPBM3BULB5BP4`,
+                url: `https://www.alphavantage.co/query?function=${type}&symbol=${symbol}&apikey=${config.API_KEY_ALPHAVANTAGE}`,
                 json: true,
                 headers: {'User-Agent': 'request'}
               }, (err, res, data) => {

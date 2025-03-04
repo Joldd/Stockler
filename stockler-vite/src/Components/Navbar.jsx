@@ -13,6 +13,7 @@ export function NavBar(){
           <div className="navbar-nav">
             <a className="nav-link active" aria-current="page" href="/">Home</a>
             <a className="nav-link" href="/stocks">Stocks</a>
+            <a className="nav-link" href="/addStock">Add</a>
             <SearchTicker/>
           </div>
         </div>
